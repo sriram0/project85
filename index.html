@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Project 85</title>
+        <style>
+            body{
+                background-image: url("concrete-road.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            canvas{
+                border: 3px ridge yellow;
+                background-image: url("parkingLot.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body onload="loadImg()">
+        <center>
+            <canvas id="c" width="600" height="400">
+            </canvas>
+        </center>
+    </body>
+    <script>
+        var ctx = document.getElementById("c").getContext("2d");
+        var cp = {
+            x:320,
+            y:80,
+            w:70,
+            h:140
+        }
+
+        var loadImg = function(){
+            ctx.clearRect(0, 0, 600, 400);
+            var i = new Image();
+            i.src = "car2.png";
+            i.onload = function(){
+                ctx.drawImage(i, cp.x, cp.y, cp.w, cp.h)
+            }
+        }
+
+        var move = function(dir){
+            switch(dir){
+                case "left":
+                    //if(cp.x>0){
+                        cp.x = cp.x - 5;
+                    //}
+                case "right":
+                    if(cp.x + cp.w < 600){
+                        cp.x+=5;
+                    }
+                case "up":
+                    if(cp.y>0){
+                        cp.y = cp.y - 5;
+                    }
+                case "down":
+                    if(cp.y + cp.h < 400){
+                        cp.y+=5;
+                    }
+            }
+            loadImg();
+        }
+
+        var my_keydown = function(e){
+            var k = e.keyCode;
+            if(k == 37 && cp.x>0){
+                cp.x = cp.x - 5;
+            }else if(k == 38 && cp.y>0){
+                cp.y = cp.y - 5;
+            }else if(k == 39 && (cp.x+cp.w < 600)){
+                cp.x+=5;
+            }else if(k == 40 && (cp.y+cp.h < 400)){
+                cp.y+=5;
+            }
+            loadImg();
+        }
+
+        window.addEventListener("keydown", my_keydown)
+    </script>
+</html>
